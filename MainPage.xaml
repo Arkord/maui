@@ -47,6 +47,12 @@
                 Text="Test Request"
                 Clicked="OnTestRequest"
                 HorizontalOptions="Center" />
+
+            <Button
+                x:Name="OnResultBtn"
+                Text="From Result"
+                Clicked="OnFromResult"
+                HorizontalOptions="Center" />
            
         </VerticalStackLayout>
     </ScrollView>

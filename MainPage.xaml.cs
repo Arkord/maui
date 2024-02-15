@@ -72,5 +72,30 @@ public partial class MainPage : ContentPage
 		return await client.GetStringAsync(uri);
 	}
 
+	private async void OnFromResult(object sender, EventArgs e)
+	{
+		Progress<int> progress = new Progress<int>();
+        progress.ProgressChanged += (sender, e) =>
+        {
+            Console.WriteLine($"Progress: {e}%");
+        };
+
+        await ProcessData(progress);
+        Console.WriteLine("Process completed.");
+	}
+
+	
+	static async Task ProcessData(IProgress<int> progress)
+    {
+        for (int i = 0; i <= 100; i++)
+        {
+            // Simulate some long-running operation
+            await Task.Delay(100);
+
+            // Report progress
+            progress.Report(i);
+        }
+    }
+
 }
 
