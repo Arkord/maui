@@ -7,6 +7,8 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
+
+		
 	}
 
 
@@ -20,6 +22,8 @@ public partial class MainPage : ContentPage
 			CounterBtn.Text = $"Clicked {count} times";
 
 		SemanticScreenReader.Announce(CounterBtn.Text);
+
+		
 	}
 
 	private void DoSomethingAsync(object sender, EventArgs e)
@@ -74,10 +78,14 @@ public partial class MainPage : ContentPage
 
 	private async void OnFromResult(object sender, EventArgs e)
 	{
+		PBar.Progress = 0;
+
 		Progress<int> progress = new Progress<int>();
         progress.ProgressChanged += (sender, e) =>
         {
             Console.WriteLine($"Progress: {e}%");
+			
+			PBar.Progress = Convert.ToDouble(e) / 1+00;
         };
 
         await ProcessData(progress);

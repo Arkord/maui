@@ -54,6 +54,12 @@
                 Clicked="OnFromResult"
                 HorizontalOptions="Center" />
            
+            <ProgressBar 
+                Progress="0.0" 
+                ProgressColor="Orange" 
+                x:Name="PBar"
+            />
+
         </VerticalStackLayout>
     </ScrollView>
 
