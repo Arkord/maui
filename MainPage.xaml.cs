@@ -1,4 +1,6 @@
-﻿namespace MauiApp1;
+﻿using Microsoft.Maui.Controls.Shapes;
+
+namespace MauiApp1;
 
 public partial class MainPage : ContentPage
 {
@@ -104,6 +106,80 @@ public partial class MainPage : ContentPage
             progress.Report(i);
         }
     }
+
+	protected void RotateMatrices(IEnumerable<Matrix> matrices, float degrees)
+	{
+		Parallel.ForEach(matrices, matrix => matrix.Rotate(degrees));
+	}
+
+	protected void ProcessData()
+    {
+        // Create a list of items to process
+        List<int> items = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+        // Process each item in the list concurrently
+        Parallel.ForEach(items, item =>
+        {
+            // Simulate processing time
+            Task.Delay(1000).Wait();
+            Console.WriteLine($"Processed item {item}");
+        });
+
+        Console.WriteLine("All items processed");
+    }
+
+	protected void InvertMatrices(IEnumerable<Matrix> matrices)
+	{
+		Parallel.ForEach(matrices, (matrix, state) =>
+		{
+			// if (!matrix)
+			// 	state.Stop();
+			// else
+			// 	matrix.Invert();
+		});
+	}
+
+	private void OnBtnAggregation(object sender, EventArgs e)
+	{
+		IEnumerable<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+		int result = ParallelSum(numbers);
+		Console.WriteLine($"the result is {result}");
+	}
+
+	private int ParallelSum(IEnumerable<int> values)
+	{
+		object mutex = new object();
+		int result = 0;
+		Parallel.ForEach(
+			source: values,
+			localInit: () => 0,
+			body: (
+					item, 
+					state, 
+					localValue
+				) => localValue + item,
+				localFinally: localValue =>
+				{
+					lock (mutex)
+					result += localValue;
+				}
+			);
+		return result;
+	}	
+
+	void ProcessArray(double[] array)
+	{
+		Parallel.Invoke(
+			() => ProcessPartialArray(array, 0, array.Length / 2),
+			() => ProcessPartialArray(array, array.Length / 2, array.Length)
+		);
+	}
+
+	void ProcessPartialArray(double[] array, int begin, int end)
+	{
+		// CPU-intensive processing...
+	}
 
 }
 

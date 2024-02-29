@@ -53,6 +53,12 @@
                 Text="From Result"
                 Clicked="OnFromResult"
                 HorizontalOptions="Center" />
+
+            <Button
+                x:Name="BtnAggregation"
+                Text="Aggregation Test"
+                Clicked="OnBtnAggregation"
+                HorizontalOptions="Center" />
            
             <ProgressBar 
                 Progress="0.0" 
